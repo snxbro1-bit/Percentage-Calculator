@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Percentage Calculator</title>
+
+<meta name="description" content="Free online percentage calculator. Calculate percentages, percentage increase, decrease, discounts and percentage difference instantly.">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#eef6ff,#dbeafe);
+    color:#172033;
+    padding:20px;
+}
+
+.container{
+    max-width:1050px;
+    margin:auto;
+    background:rgba(255,255,255,.95);
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 20px 60px rgba(15,70,130,.15);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:32px;
+    color:#0759b5;
+    margin-bottom:8px;
+}
+
+.header p{
+    color:#667085;
+    font-size:15px;
+}
+
+.calculator-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.card{
+    background:#f8fbff;
+    border:1px solid #dbeafe;
+    border-radius:18px;
+    padding:24px;
+}
+
+.card h2{
+    color:#0759b5;
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.card-description{
+    color:#667085;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.field{
+    margin-bottom:16px;
+}
+
+label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+input{
+    width:100%;
+    padding:14px 15px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    background:white;
+    font-size:16px;
+    outline:none;
+    transition:.2s;
+}
+
+input:focus{
+    border-color:#1683ff;
+    box-shadow:0 0 0 4px rgba(22,131,255,.12);
+}
+
+button{
+    width:100%;
+    border:0;
+    border-radius:12px;
+    padding:14px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.calculate{
+    background:linear-gradient(135deg,#0878e8,#0759b5);
+    color:white;
+}
+
+.calculate:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 25px rgba(7,89,181,.25);
+}
+
+.result{
+    margin-top:18px;
+    background:white;
+    border:1px solid #dbeafe;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+}
+
+.result-label{
+    display:block;
+    color:#667085;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.result-value{
+    color:#0759b5;
+    font-size:27px;
+    font-weight:800;
+    word-break:break-word;
+}
+
+.formula{
+    margin-top:15px;
+    padding:13px;
+    background:#eff6ff;
+    border-radius:10px;
+    color:#475467;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.full-width{
+    grid-column:1/-1;
+}
+
+.info{
+    margin-top:25px;
+    background:#f1f7ff;
+    border-left:4px solid #1683ff;
+    padding:16px;
+    border-radius:10px;
+    color:#475467;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#98a2b3;
+    font-size:12px;
+}
+
+@media(max-width:750px){
+
+    body{
+        padding:10px;
+    }
+
+    .container{
+        padding:20px 15px;
+        border-radius:18px;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+    .calculator-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full-width{
+        grid-column:auto;
+    }
+
+    .result-value{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📊 Free Percentage Calculator</h1>
+        <p>Calculate percentages, increases, decreases, discounts and differences instantly.</p>
+    </div>
+
+
+    <div class="calculator-grid">
+
+        <!-- CALCULATOR 1 -->
+        <div class="card">
+
+            <h2>What is X% of Y?</h2>
+
+            <p class="card-description">
+                Find a percentage of a number quickly.
+            </p>
+
+            <div class="field">
+                <label>Percentage (%)</label>
+                <input
+                    type="number"
+                    id="percent1"
+                    placeholder="Example: 20"
+                    step="any">
+            </div>
+
+            <div class="field">
+                <label>Number</label>
+                <input
+                    type="number"
+                    id="number1"
+                    placeholder="Example: 500"
+                    step="any">
+            </div>
+
+            <button class="calculate" onclick="calculatePercentOf()">
+                Calculate
+            </button>
+
+            <div class="result">
+                <span class="result-label">Result</span>
+                <div class="result-value" id="result1">0</div>
+            </div>
+
+            <div class="formula">
+                Formula: (Percentage ÷ 100) × Number
+            </div>
+
+        </div>
+
+
+        <!-- CALCULATOR 2 -->
+        <div class="card">
+
+            <h2>X is what % of Y?</h2>
+
+            <p class="card-description">
+                Find what percentage one number is of another.
+            </p>
+
+            <div class="field">
+                <label>Number 1</label>
+                <input
+                    type="number"
+                    id="number2"
+                    placeholder="Example: 50"
+                    step="any">
+            </div>
+
+            <div class="field">
+                <label>Number 2</label>
+                <input
+                    type="number"
+                    id="number3"
+                    placeholder="Example: 200"
+                    step="any">
+            </div>
+
+            <button class="calculate" onclick="calculateWhatPercent()">
+                Calculate
+            </button>
+
+            <div class="result">
+                <span class="result-label">Percentage</span>
+                <div class="result-value" id="result2">0%</div>
+            </div>
+
+            <div class="formula">
+                Formula: (Number 1 ÷ Number 2) × 100
+            </div>
+
+        </div>
+
+
+        <!-- CALCULATOR 3 -->
+        <div class="card">
+
+            <h2>Percentage Increase</h2>
+
+            <p class="card-description">
+                Calculate the percentage increase between two values.
+            </p>
+
+            <div class="field">
+                <label>Original Value</label>
+                <input
+                    type="number"
+                    id="originalIncrease"
+                    placeholder="Example: 100"
+                    step="any">
+            </div>
+
+            <div class="field">
+                <label>New Value</label>
+                <input
+                    type="number"
+                    id="newIncrease"
+                    placeholder="Example: 150"
+                    step="any">
+            </div>
+
+            <button class="calculate" onclick="calculateIncrease()">
+                Calculate
+            </button>
+
+            <div class="result">
+                <span class="result-label">Percentage Increase</span>
+                <div class="result-value" id="result3">0%</div>
+            </div>
+
+            <div class="formula">
+                Formula: ((New − Original) ÷ Original) × 100
+            </div>
+
+        </div>
+
+
+        <!-- CALCULATOR 4 -->
+        <div class="card">
+
+            <h2>Percentage Decrease</h2>
+
+            <p class="card-description">
+                Calculate the percentage decrease between two values.
+            </p>
+
+            <div class="field">
+                <label>Original Value</label>
+                <input
+                    type="number"
+                    id="originalDecrease"
+                    placeholder="Example: 200"
+                    step="any">
+            </div>
+
+            <div class="field">
+                <label>New Value</label>
+                <input
+                    type="number"
+                    id="newDecrease"
+                    placeholder="Example: 150"
+                    step="any">
+            </div>
+
+            <button class="calculate" onclick="calculateDecrease()">
+                Calculate
+            </button>
+
+            <div class="result">
+                <span class="result-label">Percentage Decrease</span>
+                <div class="result-value" id="result4">0%</div>
+            </div>
+
+            <div class="formula">
+                Formula: ((Original − New) ÷ Original) × 100
+            </div>
+
+        </div>
+
+
+        <!-- DISCOUNT -->
+        <div class="card">
+
+            <h2>Discount Calculator</h2>
+
+            <p class="card-description">
+                Calculate discount amount and final price.
+            </p>
+
+            <div class="field">
+                <label>Original Price</label>
+                <input
+                    type="number"
+                    id="originalPrice"
+                    placeholder="Example: 5000"
+                    step="any">
+            </div>
+
+            <div class="field">
+                <label>Discount (%)</label>
+                <input
+                    type="number"
+                    id="discountPercent"
+                    placeholder="Example: 20"
+                    step="any">
+            </div>
+
+            <button class="calculate" onclick="calculateDiscount()">
+                Calculate
+            </button>
+
+            <div class="result">
+                <span class="result-label">Discount Amount</span>
+                <div class="result-value" id="discountAmount">0</div>
+            </div>
+
+            <div class="result">
+                <span class="result-label">Final Price</span>
+                <div class="result-value" id="finalPrice">0</div>
+            </div>
+
+        </div>
+
+
+        <!-- FULL WIDTH -->
+        <div class="card full-width">
+
+            <h2>Percentage Difference</h2>
+
+            <p class="card-description">
+                Calculate the percentage difference between two values.
+            </p>
+
+            <div class="calculator-grid">
+
+                <div class="field">
+                    <label>Value 1</label>
+                    <input
+                        type="number"
+                        id="difference1"
+                        placeholder="Example: 100"
+                        step="any">
+                </div>
+
+                <div class="field">
+                    <label>Value 2</label>
+                    <input
+                        type="number"
+                        id="difference2"
+                        placeholder="Example: 120"
+                        step="any">
+                </div>
+
+            </div>
+
+            <button class="calculate" onclick="calculateDifference()">
+                Calculate Percentage Difference
+            </button>
+
+            <div class="result">
+                <span class="result-label">Percentage Difference</span>
+                <div class="result-value" id="resultDifference">0%</div>
+            </div>
+
+            <div class="formula">
+                Formula: |Value 1 − Value 2| ÷ ((Value 1 + Value 2) ÷ 2) × 100
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="info">
+        <strong>💡 Free & Private:</strong>
+        All calculations happen directly in your browser.
+        No data is uploaded or stored on a server.
+    </div>
+
+
+    <div class="footer">
+        Free Tools Zone • Free Online Percentage Calculator
+    </div>
+
+</div>
+
+
+<script>
+
+function cleanNumber(value){
+
+    return Number(
+        parseFloat(value).toFixed(10)
+    );
+
+}
+
+
+function calculatePercentOf(){
+
+    const percent =
+        parseFloat(
+            document.getElementById("percent1").value
+        );
+
+    const number =
+        parseFloat(
+            document.getElementById("number1").value
+        );
+
+    if(isNaN(percent) || isNaN(number)){
+
+        alert("Please enter valid numbers.");
+        return;
+
+    }
+
+    const result =
+        (percent / 100) * number;
+
+    document.getElementById("result1")
+        .textContent =
+        cleanNumber(result).toLocaleString();
+
+}
+
+
+function calculateWhatPercent(){
+
+    const number1 =
+        parseFloat(
+            document.getElementById("number2").value
+        );
+
+    const number2 =
+        parseFloat(
+            document.getElementById("number3").value
+        );
+
+    if(
+        isNaN(number1) ||
+        isNaN(number2) ||
+        number2 === 0
+    ){
+
+        alert("Please enter valid numbers. Number 2 cannot be zero.");
+        return;
+
+    }
+
+    const result =
+        (number1 / number2) * 100;
+
+    document.getElementById("result2")
+        .textContent =
+        cleanNumber(result).toLocaleString() + "%";
+
+}
+
+
+function calculateIncrease(){
+
+    const original =
+        parseFloat(
+            document.getElementById("originalIncrease").value
+        );
+
+    const current =
+        parseFloat(
+            document.getElementById("newIncrease").value
+        );
+
+    if(
+        isNaN(original) ||
+        isNaN(current) ||
+        original === 0
+    ){
+
+        alert("Please enter valid numbers. Original value cannot be zero.");
+        return;
+
+    }
+
+    const result =
+        ((current - original) / original) * 100;
+
+    document.getElementById("result3")
+        .textContent =
+        cleanNumber(result).toLocaleString() + "%";
+
+}
+
+
+function calculateDecrease(){
+
+    const original =
+        parseFloat(
+            document.getElementById("originalDecrease").value
+        );
+
+    const current =
+        parseFloat(
+            document.getElementById("newDecrease").value
+        );
+
+    if(
+        isNaN(original) ||
+        isNaN(current) ||
+        original === 0
+    ){
+
+        alert("Please enter valid numbers. Original value cannot be zero.");
+        return;
+
+    }
+
+    const result =
+        ((original - current) / original) * 100;
+
+    document.getElementById("result4")
+        .textContent =
+        cleanNumber(result).toLocaleString() + "%";
+
+}
+
+
+function calculateDiscount(){
+
+    const price =
+        parseFloat(
+            document.getElementById("originalPrice").value
+        );
+
+    const discount =
+        parseFloat(
+            document.getElementById("discountPercent").value
+        );
+
+    if(
+        isNaN(price) ||
+        isNaN(discount) ||
+        price < 0 ||
+        discount < 0
+    ){
+
+        alert("Please enter valid values.");
+        return;
+
+    }
+
+    const discountAmount =
+        price * discount / 100;
+
+    const finalPrice =
+        price - discountAmount;
+
+    document.getElementById("discountAmount")
+        .textContent =
+        cleanNumber(discountAmount).toLocaleString();
+
+    document.getElementById("finalPrice")
+        .textContent =
+        cleanNumber(finalPrice).toLocaleString();
+
+}
+
+
+function calculateDifference(){
+
+    const value1 =
+        parseFloat(
+            document.getElementById("difference1").value
+        );
+
+    const value2 =
+        parseFloat(
+            document.getElementById("difference2").value
+        );
+
+    if(
+        isNaN(value1) ||
+        isNaN(value2) ||
+        (value1 + value2) === 0
+    ){
+
+        alert("Please enter valid numbers.");
+        return;
+
+    }
+
+    const average =
+        (value1 + value2) / 2;
+
+    const result =
+        Math.abs(value1 - value2) /
+        average * 100;
+
+    document.getElementById("resultDifference")
+        .textContent =
+        cleanNumber(result).toLocaleString() + "%";
+
+}
+
+</script>
+
+</body>
+</html>
